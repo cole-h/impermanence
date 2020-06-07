@@ -116,8 +116,8 @@ in
               touch "$targetPath"
             fi
 
-            # lastly we correctly chown them, if both were just created this
-            # should be a noop.
+            # synchronize perms between the two, should be a noop if they were
+            # both just created.
             chown --reference="$sourcePath" "$targetPath"
             chmod --reference="$sourcePath" "$targetPath"
           '';
