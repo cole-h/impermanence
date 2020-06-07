@@ -65,13 +65,13 @@ in
             sourceBase="''${sourceBase%/}"
             target="''${target%/}"
 
-            # iterate over each part of the target path
+            # iterate over each part of the target path, e.g. var, lib, iwd
             previousPath="/"
             for pathPart in $(echo "$target" | tr "/" " "); do
               # construct the incremental path, e.g. /var, /var/lib, /var/lib/iwd
               currentTargetPath="$previousPath$pathPart/"
 
-              # construct the source path, e.g. /state/var, /state/var/lib
+              # construct the source path, e.g. /state/var, /state/var/lib, ...
               currentSourcePath="$sourceBase$currentTargetPath"
 
               if [ ! -d "$currentSourcePath" ]; then
