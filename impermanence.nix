@@ -57,6 +57,19 @@ in
         # of the directory structure.
         mkDirCreationSnippet = persistentStoragePath: dir:
           ''
+            # Given a source directory (/source) and a target directory
+            # (/target/foo/bar/bazz) we want to "clone" the target structure
+            # from source into the target, which is to way we want to get both
+            # /source/target/foo/bar/bazz and /target/foo/bar/bazz to exist
+            # in the filesystem.
+            # To do this we split the target's path into parts (target, foo,
+            # bar, bazz) and iterate over them while accumulating the path
+            # (/target/, /target/foo/, /target/foo/bar, ...) and for each of
+            # these incresingly qualified paths we:
+            # 1. Enforce /source/qualifiedPath and qualifiedPath exists
+            # 2. Copy the ownership of the source path into the target path
+            # 3. Copy the mode of the source path into the target path
+
             # capture the nix vars into bash to avoid escape hell
             sourceBase="${persistentStoragePath}"
             target="${dir}"
