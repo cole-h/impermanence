@@ -74,11 +74,11 @@ in
               # construct the source path, e.g. /state/var, /state/var/lib
               currentSourcePath="$sourceBase$currentTargetPath"
 
-              if [ ! -e "$currentSourcePath" ]; then
+              if [ ! -d "$currentSourcePath" ]; then
                 printf "Bind source '%s' does not exist, creating it\n" "$currentSourcePath"
                 mkdir "$currentSourcePath"
               fi
-              if [ ! -e "$currentTargetPath" ]; then
+              if [ ! -d "$currentTargetPath" ]; then
                 mkdir "$currentTargetPath"
               fi
 
@@ -109,10 +109,10 @@ in
             # now create the source and target, if they don't exist
             sourcePath="${persistentStoragePath}${file}"
             targetPath="${file}"
-            if [ ! -e "$sourcePath" ]; then
+            if [ ! -f "$sourcePath" ]; then
               touch "$sourcePath"
             fi
-            if [ ! -e "$targetPath" ]; then
+            if [ ! -f "$targetPath" ]; then
               touch "$targetPath"
             fi
 
