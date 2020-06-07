@@ -60,16 +60,20 @@ in
             # capture the nix vars into bash to avoid escape hell
             sourceBase="${persistentStoragePath}"
             target="${dir}"
+
             # trim trailing slashes the root of all evil
             sourceBase="''${sourceBase%/}"
             target="''${target%/}"
+
             # iterate over each part of the target path
             previousPath="/"
             for pathPart in $(echo "$target" | tr "/" " "); do
               # construct the incremental path, e.g. /var, /var/lib, /var/lib/iwd
               currentTargetPath="$previousPath$pathPart/"
+
               # construct the source path, e.g. /state/var, /state/var/lib
               currentSourcePath="$sourceBase$currentTargetPath"
+
               if [ ! -e "$currentSourcePath" ]; then
                 printf "Bind source '%s' does not exist, creating it\n" "$currentSourcePath"
                 mkdir "$currentSourcePath"
@@ -77,10 +81,12 @@ in
               if [ ! -e "$currentTargetPath" ]; then
                 mkdir "$currentTargetPath"
               fi
+
               # synchronize perms between the two, should be a noop if they were
               # both just created.
               chown --reference="$currentSourcePath" "$currentTargetPath"
               chmod --reference="$currentSourcePath" "$currentTargetPath"
+
               # lastly we update the previousPath to continue down the tree
               previousPath="$currentTargetPath"
               unset currentSourcePath
@@ -99,6 +105,7 @@ in
           ''
             # replicate the directory structure of ${file}
             ${mkDirCreationSnippet persistentStoragePath (dirOf file)}
+
             # now create the source and target, if they don't exist
             sourcePath="${persistentStoragePath}${file}"
             targetPath="${file}"
@@ -108,6 +115,7 @@ in
             if [ ! -e "$targetPath" ]; then
               touch "$targetPath"
             fi
+
             # lastly we correctly chown them, if both were just created this
             # should be a noop.
             chown --reference="$sourcePath" "$targetPath"
