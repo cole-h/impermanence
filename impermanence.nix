@@ -59,7 +59,7 @@ in
           ''
             # Given a source directory (/source) and a target directory
             # (/target/foo/bar/bazz) we want to "clone" the target structure
-            # from source into the target, which is to way we want to get both
+            # from source into the target, which is to say we want to get both
             # /source/target/foo/bar/bazz and /target/foo/bar/bazz to exist
             # in the filesystem.
             # To do this we split the target's path into parts (target, foo,
