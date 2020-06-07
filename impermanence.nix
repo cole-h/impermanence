@@ -80,6 +80,7 @@ in
               # synchronize perms between the two, should be a noop if they were
               # both just created.
               chown --reference="$currentSourcePath" "$currentTargetPath"
+              chmod --reference="$currentSourcePath" "$currentTargetPath"
               # lastly we update the previousPath to continue down the tree
               previousPath="$currentTargetPath"
               unset currentSourcePath
@@ -110,6 +111,7 @@ in
             # lastly we correctly chown them, if both were just created this
             # should be a noop.
             chown --reference="$sourcePath" "$targetPath"
+            chmod --reference="$sourcePath" "$targetPath"
           '';
 
         # Function to build the activation script string for creating files
