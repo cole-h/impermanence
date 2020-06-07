@@ -89,9 +89,11 @@ in
 
               # lastly we update the previousPath to continue down the tree
               previousPath="$currentTargetPath"
+
               unset currentSourcePath
               unset currentTargetPath
             done
+
             unset previousPath
             unset sourceBase
             unset target
@@ -120,6 +122,9 @@ in
             # both just created.
             chown --reference="$sourcePath" "$targetPath"
             chmod --reference="$sourcePath" "$targetPath"
+
+            unset sourcePath
+            unset targetPath
           '';
 
         # Function to build the activation script string for creating files
