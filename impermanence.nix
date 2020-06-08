@@ -95,14 +95,18 @@ in
                 mkdir "$currentTargetPath"
               fi
 
+              # resolve the source path to avoid symlinks
+              currentRealSourcePath="$(realpath "$currentSourcePath")"
+
               # synchronize perms between the two, should be a noop if they were
               # both just created.
-              chown --reference="$currentSourcePath" "$currentTargetPath"
-              chmod --reference="$currentSourcePath" "$currentTargetPath"
+              chown --reference="$currentRealSourcePath" "$currentTargetPath"
+              chmod --reference="$currentRealSourcePath" "$currentTargetPath"
 
               # lastly we update the previousPath to continue down the tree
               previousPath="$currentTargetPath"
 
+              unset currentRealSourcePath
               unset currentSourcePath
               unset currentTargetPath
             done
