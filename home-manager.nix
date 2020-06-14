@@ -6,7 +6,7 @@ let
 
   persistentStoragePaths = attrNames cfg;
 
-  inherit (pkgs.callPackage ./lib.nix { }) splitPath dirListToPath concatPaths;
+  inherit (import ./lib.nix { inherit lib; }) splitPath dirListToPath concatPaths;
 in
 {
   options = {
